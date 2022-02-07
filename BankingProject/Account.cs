@@ -8,6 +8,7 @@ namespace Banking
 {
     public class Account
     {   //Properties
+        private static int NextAccountNumber { get; set; } = 1;
         public decimal Balance { get; set; }
         public int AccountNumber { get; set; }
         public string Description { get; set; }
@@ -35,6 +36,20 @@ namespace Banking
             Balance -= Amount;
             return true;
         }
+        public bool Transfer(decimal Amount, Account ToAccount)
+        {
+            try
+            {
+                Withdrawl(Amount);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Witdrawl Fain in Transfer");
+            }
+            ToAccount.Deposit(Amount);
+            return true;
+            
+        }
         public void Debug()
         {
             Console.WriteLine($"{AccountNumber}|{Description}|{Balance:c}");
@@ -42,7 +57,8 @@ namespace Banking
         // Constructors
         public Account()  //the name of the contructor is ALWAYS the name of the class with no parens
         {
-            AccountNumber = 1;
+            AccountNumber = NextAccountNumber;
+            NextAccountNumber++;
             Description = "New Account";
             Balance = 0;
         }   
