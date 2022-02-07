@@ -28,6 +28,10 @@ namespace Banking
             {
                 throw new Exception("Amount must be positive.");
             }
+            if (Amount > Balance)
+            {
+                throw new Exception("Insufficient Funds!");
+            }
             Balance -= Amount;
             return true;
         }
